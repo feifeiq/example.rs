@@ -10,3 +10,4 @@ path = "src/date.rs"
 [dependencies]
 num="*"
 chrono="*"
+time="*"
