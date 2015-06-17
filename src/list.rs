@@ -9,7 +9,7 @@ enum List<T> {
     Cons(T, Box<List<T>>)
 }
 
-impl<T> List<T> {
+impl<T:Display> List<T> {
     fn new() -> Box<List<T>> {
         Box::new(List::Nil)
     }
@@ -30,7 +30,24 @@ impl<T> List<T> {
         mem::swap(&mut x, &mut *self);
         x
     }
+
+    fn len(&self)->u32{
+        match *self{
+            Cons(_,ref tail)=>1+tail.len(),
+            Nil=>0,
+        }
+    }
+
+ fn stringify(self:&List<T>) -> String {
+        match *self {
+            Cons(ref head, ref tail) =>  format!("{}, {}", head, tail.stringify()),
+            Nil =>format!("Nil"),
+        }
+    }
+   
 }
+
+
 
 fn main() {
     let list = List::new();
@@ -43,45 +60,13 @@ fn main() {
     let list2 = list2.prepend(6).prepend(7).prepend(8);
     
     println!("{:?}", list2);
+
+    println!("{:?}", list2.stringify());
     
-    println!("{:?}", list.concat(list2));
+    let list=list.concat(list2);
+    println!("{:?}",list );
+
+    println!("linked list has length: {}", list.len());
+    println!("{:?}", list.stringify());
+     
 }
-
-
-// impl List{
-//     fn new()->List{
-//         Nil
-//     }
-
-//     fn add(self,e:u32)->Self{
-//         Cons(e,Box::new(self))
-//     }
-
-//     fn len(&self)->u32{
-//         match *self{
-//             Cons(_,ref tail)=>1+tail.len(),
-//             Nil=>0,
-//         }
-//     }
-//     fn stringfy(&self)->String{
-//         match *self{
-//             Cons(head,ref tail)=>format!("{},{}",head,tail.stringfy()),
-//             Nil=>String::from_str("Nil"),
-//         }
-//     }
-// }
-
-
-// impl Display for List{
-//     fn fmt(&self, fmt:&mut Formatter) -> Result{
-//         write!(fmt,"{:?}",self)
-//     }
-// }
-
-// fn main() {
-//    let mut list=List::new();
-//    list.add(2).add(3);
-//    list.add(5);
-//    println!("{:?}",list.len() );
-//    println!("{:?}", list.stringfy());
-// }
