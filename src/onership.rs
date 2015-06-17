@@ -1,8 +1,13 @@
+const X:i32=123;
 fn foo(v1: &mut Vec<i32>, v2: &Vec<i32>) -> i32 {
     // do stuff with v1 and v2
     v1.push(5);
     // return the answer
     42
+}
+
+fn bar()->&'a str{
+	"abc"
 }
 fn main() {
 	let mut v1 = vec![1, 2, 3];
