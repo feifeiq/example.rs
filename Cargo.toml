@@ -5,9 +5,10 @@ authors = ["feifeiq <feifeiq@foxmail.com>"]
 
 [[bin]]
 name = "example"
-path = "src/date.rs"
+path = "src/array.rs"
 
 [dependencies]
 num="*"
 chrono="*"
 time="*"
+encoding = "*"

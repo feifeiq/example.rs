@@ -3,16 +3,23 @@ use std::io;
 use std::mem;
 
 fn main(){
-	let  x=6;
-	let ret=match x {
-		5 => "E",
-		6 => "D",
-		7 => "C",
-		8...9=>"B",
-		10=>"A",
-		_=>"?"
-	};
-	println!("{:?}", ret);
+	
+
+	let mut buf_mem = [0u8;20];
+	for i in 0..20 {
+		buf_mem[i]=i as u8;
+	}
+
+	let mut bufs=[&buf_mem[..1];10];
+	if let Some(x)=Some(bufs[0]){
+		println!("{:?}", x==[]);
+	}
+	println!("{:?}", bufs);
+	for i in 0..10 {
+		let buf=&buf_mem[i*2..i*2+1];
+		bufs[i] = buf;
+	}
+	println!("{:?}", bufs);
 
 	let x=vec![1,2,3];
 	let mut x=x;

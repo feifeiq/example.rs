@@ -1,5 +1,7 @@
 #![feature(box_syntax, box_patterns)]
 #![feature(associated_consts)]
+use std::rc::Rc;
+use std::any::Any;
 
 trait Foo {
     const ID: i32;
@@ -21,12 +23,15 @@ fn foo(x: Box<BigStruct>) -> BigStruct {
 }
 
 fn main() {
+    let x:Box<Any>=box 1;
+    println!("{:?}", x.downcast::<i32>().ok().unwrap());
+
     let x = Box::new(BigStruct {
         one: 1,
         two: 2,
         one_hundred: 100,
     });
-     let x = box BigStruct {
+    let x = box BigStruct {
         one: 1,
         two: 2,
         one_hundred: 100,
@@ -47,4 +52,8 @@ fn main() {
         },
         _ => unreachable!()
     }
+
+    // let rc_ptr:Rc<i32> = box 1;
+    // let box_ptr:Box<i32> = box 1;
+    // let box_on_heap: Box<i32> = box(HEAP) 1;
 }
