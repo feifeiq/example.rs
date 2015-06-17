@@ -5,53 +5,69 @@ use std::ops::Deref;
 use std::boxed::Box;
 use std::fmt::Debug;
 use std::marker::Reflect;
+
+struct Nil;
+#[derive(Debug)]
+struct Pair<'a>(i32,&'a str);
+
 struct Person {
 	name: String
 }
 #[derive(Debug)]
 struct Point {
-	x: i32,
-	y: i32,
+	x: f64,
+	y: f64,
 }
 
 impl Point {
 	fn new() ->Point{
-		Point{
-			x:1,
-			y:2,
-		}
+		Point{x:0.3,y:0.4}
 	}
 }
 
 impl std::default::Default for Point {
 	fn default() ->Point{
-		Point{
-			x:1,
-			y:2,
-		}
+		Point{x:0.3,y:0.4}
 	}
 }
 
 
+struct Node {
+    Conns:(u32,Box<Node>),
+}
+mod m1{
+	#[derive(Debug)]
+	pub struct WiteBox<T> {
+		pub content:T,
+	}
+
+	#[derive(Debug)]
+	pub struct BlackBox<T> {
+		content:T,
+	}
+
+	impl<T> BlackBox<T>{
+		pub fn new(content:T)->BlackBox<T>{
+			BlackBox{content:content}
+		}
+	}
+}
 fn main() {
-	let x:Box<Any>=box 1;
-	println!("{:?}", x.downcast::<i32>().ok().unwrap());
 
-	let mut buf_mem = [0u8;20];
-	for i in 0..20 {
-		buf_mem[i]=i as u8;
-	}
+	let white_box=m1::WiteBox{content:"wite box"};
+	println!("{:?}",white_box );
 
-	let mut bufs=[&buf_mem[..1];10];
-	if let Some(x)=Some(bufs[0]){
-		println!("{:?}", x==[]);
-	}
-	println!("{:?}", bufs);
-	for i in 0..10 {
-		let buf=&buf_mem[i*2..i*2+1];
-		bufs[i] = buf;
-	}
-	println!("{:?}", bufs);
+	let black_box=m1::BlackBox::new("black box");
+	println!("{:?}",black_box );
+
+	println!("{:?}", bar());
 	let mut point=Point::new();
 	println!("{:?}", point);
+
+	let point:Point=Point{x:0.3,y:0.4};
+	println!("({},{})", point.x,point.y);
+
+	let nil=Nil;
+	let pair=Pair(1,"a");
+	println!("{:?}",pair );
 }

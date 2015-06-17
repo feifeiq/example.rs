@@ -17,23 +17,24 @@ fn do_something(x: &Foo) {
 	x.method();
 }
 
+
+fn main() {
 	/// let x = 5;
 	/// #let y = 6;
 	/// println!("{}", x + y);
-	fn main() {
-		let x = 5u8;
-		do_something(&x as &Foo);
-		println!("{:?}", x);
+	let x = 5u8;
+	do_something(&x as &Foo);
+	println!("{:?}", x);
 
-		let y={
-			let x = "Hello".to_string();
-			do_something(&x);
-			println!("{:?}", x);
-		};
+	let y={
+		let x = "Hello".to_string();
+		do_something(&x);
 		println!("{:?}", x);
-		let x = 5u8;
-		let y = "Hello".to_string();
-		
+	};
+	println!("{:?}", x);
+	let x = 5u8;
+	let y = "Hello".to_string();
+
 
 	// do_something(x);
 	// do_something(y);
