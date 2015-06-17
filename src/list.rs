@@ -1,6 +1,8 @@
 #![feature(box_syntax)]
 use List::{Cons,Nil};
 use std::fmt::{Display,Result,Formatter};
+use std::mem;
+
 #[derive(Debug)]
 enum List<T> {
     Nil,
@@ -12,8 +14,21 @@ impl<T> List<T> {
         Box::new(List::Nil)
     }
     
-    fn prepend(self: Box<List<T>>, x: T) -> Box<Self> {
+    fn prepend(self: Box<List<T>>, x: T) -> Box<List<T>> {
         Box::new(List::Cons(x, self))
+    }
+    
+    fn concat(mut self: Box<List<T>>, l: Box<List<T>>) -> Box<List<T>> {
+        match self.take() {
+            List::Nil => l,
+            List::Cons(x, rest) => Box::new(List::Cons(x, rest.concat(l)))
+        }
+    }
+    
+    fn take(&mut self) -> List<T> {
+        let mut x = List::Nil;
+        mem::swap(&mut x, &mut *self);
+        x
     }
 }
 
@@ -23,11 +38,15 @@ fn main() {
     let list = list.prepend(1).prepend(2).prepend(3);
     
     println!("{:?}", list);
+    
+    let list2 = List::new();
+    let list2 = list2.prepend(6).prepend(7).prepend(8);
+    
+    println!("{:?}", list2);
+    
+    println!("{:?}", list.concat(list2));
 }
-// enum List{
-//     Cons(u32,Box<List>),
-//     Nil,
-// }
+
 
 // impl List{
 //     fn new()->List{
