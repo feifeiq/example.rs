@@ -31,8 +31,9 @@ impl std::default::Default for Point {
 	}
 }
 
-fn bar<'a>()->&'a str{
-	"bar"
+
+struct Node {
+    Conns:(u32,Box<Node>),
 }
 mod m1{
 	#[derive(Debug)]

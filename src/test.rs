@@ -1,3 +1,14 @@
+trait Foo {
+	fn foo(&self)->Box<Foo>;
+}
+
+impl Foo {
+	fn foo(&self)->Box<Foo>{
+		Box::new(self)
+	}
+}
+
+
 fn main() {
 	let mut count = 0;
 	println!("{:?}",count); 
